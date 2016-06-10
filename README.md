@@ -1,7 +1,7 @@
 # Dota-2-Manager
 This is the Dota 2 Manager game all are welcome to come and aid in the development of this game from art to programming
 
-We have a Slack set up come join us: https://dota2manager.slack.com
+We have a discord set up come join us: https://discord.gg/01437nbyGDK4YEd4u
 
 Week 1 question
 
