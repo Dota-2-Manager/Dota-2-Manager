@@ -1,0 +1,38 @@
+The game it self:
+Hero System
+  Hero Info 
+  Hero Rank
+Meta System
+  Patch Changes
+  Strategy Ranking
+Stats System 
+  Dota-Player Stats
+  Team Stats
+    Players
+    Matchs
+    Leagues
+    Strategies
+League System
+  Type
+  Host
+  Prizepool
+  Number of teams
+  Time
+Match Process 
+  Pre-Match Preparation
+  Draft Phase
+  Result 
+
+What Player can do : 
+Team Management 
+  Player Transaction 
+  Training 
+Match Preparation
+  Pre-match Preparation 
+  Draft 
+Event Management 
+  Registration
+Side activity 
+  Betting
+  
+//GUI work puting it all together
