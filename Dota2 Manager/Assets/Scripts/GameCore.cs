@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using LitJson;
+using System.Collections.Generic;
+using System;
 
 public class GameCore : MonoBehaviour {
 
-<<<<<<< HEAD
 	//This are for requesting the teams info
 	private string jsonString;
 	private JsonData playerData;
 	private List<string> playersInTeam = new List<string>();
 	//private JsonData test;
 
-=======
->>>>>>> parent of db8afe9... added the ability to read from the .json file, currently returns only 1 thing, aka only the players names/ages/stats/etc, meaning you have to request it several times for each thing
     public Sprite teamlogo;
     public Image logo;
     public GameObject playercanvis;
@@ -39,6 +39,14 @@ public class GameCore : MonoBehaviour {
     void Start () {
         ChangetoTeamView();
         Cash = 500000;
+
+		jsonString = File.ReadAllText(Application.dataPath + "/Resources/playersInfo.json");
+		playerData = JsonMapper.ToObject (jsonString);
+		GetPlayer ("OG", "players");
+		for (int i = 0; i < 5; i++) 
+		{
+			Debug.Log(playersInTeam[i]);
+		}
     }
     void LateUpdate()
     {
@@ -120,7 +128,7 @@ public class GameCore : MonoBehaviour {
 
     }
 
-<<<<<<< HEAD
+
 	JsonData GetPlayer(string team, string type)
 	{
 		playersInTeam.Clear ();
@@ -136,9 +144,5 @@ public class GameCore : MonoBehaviour {
 		//Return the first position as returning null seems to pause unity
 		return playerData["players"][0];
 	}
-
-
-
-=======
->>>>>>> parent of db8afe9... added the ability to read from the .json file, currently returns only 1 thing, aka only the players names/ages/stats/etc, meaning you have to request it several times for each thing
+		
 }
