@@ -1,0 +1,52 @@
+{
+"players": [
+
+	{
+		"name": "Miracle",
+		"age": "19",
+		"CurrentRole": 2,
+		"pushing": 15,
+		"farming": 18,
+		"fighting": 17,
+		"warding": 8,
+		"Positioning": 14,
+		"mapAwareness": 16,
+		"decisionMakeing": 16,
+		"roaming": 17,
+		"laneControl": 18,
+		"riskTakeing": 15,
+		"flair": 19,
+		"Consistency": 19,
+		"teamWork": 18,
+		"Leadership": 1,
+		"Carry": 4,
+		"Mid": 5,
+		"Offlane": 2,
+		"Support": 1
+	},
+	{
+		"name": "NoTail",
+		"age": "22",
+		"CurrentRole": 1,
+		"pushing": 12,
+		"farming": 15,
+		"fighting": 18,
+		"warding": 13,
+		"Positioning": 17,
+		"mapAwareness": 16,
+		"decisionMakeing": 13,
+		"roaming": 15,
+		"laneControl": 16,
+		"riskTakeing": 10,
+		"flair": 8,
+		"Consistency": 18,
+		"teamWork": 19,
+		"Leadership": 1,
+		"Carry": 5,
+		"Mid": 3,
+		"Offlane": 1,
+		"Support": 4
+	}	
+
+]
+}

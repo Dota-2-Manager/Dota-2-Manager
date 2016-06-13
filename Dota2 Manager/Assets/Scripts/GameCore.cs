@@ -1,8 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Collections;
+using LitJson;
+using System.Collections.Generic;
+using System;
 
 public class GameCore : MonoBehaviour {
+
+	//This are for requesting the teams info
+	private string jsonString;
+	private JsonData playerData;
+	private List<string> playersInTeam = new List<string>();
+	private string test;
 
     public Sprite teamlogo;
     public Image logo;
@@ -30,6 +40,16 @@ public class GameCore : MonoBehaviour {
     void Start () {
         ChangetoTeamView();
         Cash = 500000;
+
+		//This rqeuest the data for a specific team
+		jsonString = File.ReadAllText(Application.dataPath + "/Resources/playersInfo.json");
+		playerData = JsonMapper.ToObject (jsonString);
+		//Use the first variable to request a team, the second one for what stats(name, age, pus, skill, etc)
+		GetPlayer ("OG", "age");
+		for (int i = 0; i < 5; i++) 
+		{
+			Debug.Log(playersInTeam[i]);
+		}
     }
     void LateUpdate()
     {
@@ -110,5 +130,22 @@ public class GameCore : MonoBehaviour {
         }
 
     }
+
+	JsonData GetPlayer(string team, string type)
+	{
+		playersInTeam.Clear ();
+		for(int i = 0; i< playerData["players"].Count; i++)
+		{
+			if(playerData["players"][i]["team"].ToString() == team)
+			{
+				playersInTeam.Add (Convert.ToString(playerData["players"][i][type]));
+			}
+		}
+
+		//Return the first position as returning null seems to pause unity
+		return playerData["players"][0];
+	}
+
+
 
 }
