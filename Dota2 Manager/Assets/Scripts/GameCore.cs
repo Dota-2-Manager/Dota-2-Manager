@@ -12,7 +12,7 @@ public class GameCore : MonoBehaviour {
 	private string jsonString;
 	private JsonData playerData;
 	private List<string> playersInTeam = new List<string>();
-	private string test;
+	//private JsonData test;
 
     public Sprite teamlogo;
     public Image logo;
@@ -138,6 +138,7 @@ public class GameCore : MonoBehaviour {
 		{
 			if(playerData["players"][i]["team"].ToString() == team)
 			{
+				//test = playerData ["players"] [i];
 				playersInTeam.Add (Convert.ToString(playerData["players"][i][type]));
 			}
 		}
