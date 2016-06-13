@@ -4,7 +4,7 @@ using System.Collections;
 public class DotaPlayer : MonoBehaviour {
 
 
-    public string name;
+    public string playerName;
 
     //postive
     public double farming;
@@ -15,18 +15,19 @@ public class DotaPlayer : MonoBehaviour {
     public double rage;
 
     //negative
-    public double stress;
+    public double playerStress;
 
     //total
-    public double total;
+    public double playerTotal;
 
-    void Start () {
-        CalculateTotal();
+    void Start () 
+	{
+        CalculatePlayerTotal();
     }
 
-    public void CalculateTotal()
+    public void CalculatePlayerTotal()
     {
-        total = farming * 0.145 + lastHitting * 0.145 + denying * 0.145 + Pushing * 0.145 + decisionMaking * 0.145 + rage * 0.145 - stress * 0.145;
+		playerTotal = farming * 0.145 + lastHitting * 0.145 + denying * 0.145 + Pushing * 0.145 + decisionMaking * 0.145 + rage * 0.145 - playerStress * 0.145;
     }
 	
 

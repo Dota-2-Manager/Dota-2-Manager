@@ -13,30 +13,33 @@ public class NewPlayerGen : MonoBehaviour {
         MakeNewPlayer();
         MakeNewPlayer();
         MakeNewPlayer();
+		MakeNewPlayer();
+		MakeNewPlayer();
 
         foreach (DotaPlayer player in players)
         {
-            Debug.Log(player.total);
+            Debug.Log(player.playerTotal);
         }
-       
 
     }
 	
 	// Update is called once per frame
 	void MakeNewPlayer ()
     {
-        a = new DotaPlayer();
-        a.name = "fred";
+        //a = new DotaPlayer();
+		DotaPlayer a = gameObject.AddComponent<DotaPlayer> () as DotaPlayer;
+        a.playerName = "fred";
         a.farming = Random.Range(10,25);
         a.lastHitting = Random.Range(10, 25);
         a.denying = Random.Range(10, 25);
         a.Pushing = Random.Range(10, 25);
         a.decisionMaking = Random.Range(10, 25);
         a.rage = Random.Range(10, 25);
-        a.stress = 0;
-        a.CalculateTotal();
+        a.playerStress = 0;
+        a.CalculatePlayerTotal();
         players.Add(a);
         
 	}
+		
 
 }
