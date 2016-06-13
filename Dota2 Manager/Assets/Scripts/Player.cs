@@ -33,10 +33,6 @@ public class DotaPlayer{
     //total
     public double total;
 
-	//Stats for v0.2
-	private double happiness;
-	private double greed;
-
     public DotaPlayer() {
         CurrentRole = 0;
         
