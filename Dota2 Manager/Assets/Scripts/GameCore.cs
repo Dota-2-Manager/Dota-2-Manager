@@ -57,11 +57,11 @@ public class GameCore : MonoBehaviour {
         TeamValue.text = "Team total score " + Mathf.Round((float)team.GetTotalValue());
         CashT.text = "$" + Cash;
         Name.text = "Name: " + team.getList()[currentmember].name;
-        Descisionmakeing.text = "Decision Makeing: " + team.getList()[currentmember].getdecisionMakeing().ToString();
-        Calm.text = "Risktakeing: " + team.getList()[currentmember].getrisktakeing().ToString();
-        Farming.text = "Farming: " + team.getList()[currentmember].getfarming().ToString();
-        pushing.text = "Pushing: " + team.getList()[currentmember].getpushing().ToString();
-        fighting.text = "Fighting: " + team.getList()[currentmember].getfighting().ToString();
+        Descisionmakeing.text = "Decision Makeing: " + team.getList()[currentmember].decisionMakeing.ToString();
+        Calm.text = "Risktakeing: " + team.getList()[currentmember].riskTakeing.ToString();
+        Farming.text = "Farming: " + team.getList()[currentmember].farming.ToString();
+        pushing.text = "Pushing: " + team.getList()[currentmember].pushing.ToString();
+        fighting.text = "Fighting: " + team.getList()[currentmember].fighting.ToString();
         playertotal.text = "Players Total Ability" + Mathf.Round((float)team.getList()[currentmember].total).ToString();
         
     }

@@ -10,26 +10,26 @@ public class DotaPlayer{
     private Position CurrentRole;
 
     //newStats v0.1
-    private double pushing { get; set; }
-    private double farming { get; set; }
-    private double fighting { get; set; }
-    private double warding { get; set; }
-    private double Positioning { get; set; }
-    private double mapAwareness { get; set; }
-    private double decisionMakeing { get; set; }
-    private double roaming { get; set; }
-    private double laneControl { get; set; }
-    private double riskTakeing { get; set; }
-    private double flair { get; set; }
-    private double Consistency { get; set; }
-    private double teamWork { get; set; }
-    private double Leadership { get; set; }
+    public double pushing { get; set; }
+    public double farming { get; set; }
+    public double fighting { get; set; }
+    public double warding { get; set; }
+    public double Positioning { get; set; }
+    public double mapAwareness { get; set; }
+    public double decisionMakeing { get; set; }
+    public double roaming { get; set; }
+    public double laneControl { get; set; }
+    public double riskTakeing { get; set; }
+    public double flair { get; set; }
+    public double Consistency { get; set; }
+    public double teamWork { get; set; }
+    public double Leadership { get; set; }
 
     //positions
-    private double Carry { get; set; }
-    private double Mid { get; set; }
-    private double Offlane { get; set; }
-    private double Support { get; set; }
+    public double Carry { get; set; }
+    public double Mid { get; set; }
+    public double Offlane { get; set; }
+    public double Support { get; set; }
 
     //total
     public double total;
