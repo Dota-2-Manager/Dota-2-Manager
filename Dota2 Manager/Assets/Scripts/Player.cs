@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts;
 
 public class DotaPlayer{
 
 
     public string name;
     private int age;
-    private double CurrentRole;
+    private Position CurrentRole;
 
     //newStats v0.1
     private double pushing;
@@ -40,26 +41,21 @@ public class DotaPlayer{
 
     public void CalculateTotal()
     {
-        if (CurrentRole == 0)
+        switch(CurrentRole)
         {
-            //suport
-            total = (roaming * 0.15d + warding * 0.15d + Positioning * 0.15d + laneControl * 0.15d) + (teamWork * 0.06f + fighting * 0.06f + farming * 0.06f + Consistency * 0.06f + decisionMakeing * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + pushing * 0.025f + mapAwareness * 0.025f);
-            Debug.Log(total);
-        }
-        else if (CurrentRole == 1)
-        {
-            //carry
-            total = (farming * 0.15f + mapAwareness * 0.15f + decisionMakeing * 0.15f + fighting * 0.15f) + (pushing * 0.06f + Consistency * 0.06f + laneControl * 0.06f + Positioning * 0.06f + teamWork * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + roaming * 0.025f);
-        }
-        else if (CurrentRole == 2)
-        {
-            //oflane
-            total = (fighting * 0.15f + Positioning * 0.15f + laneControl * 0.15f + Consistency * 0.15f) + (decisionMakeing * 0.06f + farming * 0.06f + roaming * 0.06f + teamWork * 0.06f + pushing * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + mapAwareness * 0.025f);
-        }
-        else
-        {
-            //mid
-            total = (fighting * 0.15f + mapAwareness * 0.15f + laneControl * 0.15f + farming * 0.15f) + (decisionMakeing * 0.06f + roaming * 0.06f + Consistency * 0.06f + teamWork * 0.06f + Positioning * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + pushing * 0.025f);
+            case Position.FourthPositionSup:
+                total = (roaming * 0.15d + warding * 0.15d + Positioning * 0.15d + laneControl * 0.15d) + (teamWork * 0.06f + fighting * 0.06f + farming * 0.06f + Consistency * 0.06f + decisionMakeing * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + pushing * 0.025f + mapAwareness * 0.025f);
+                Debug.Log(total);
+                break;
+            case Position.Carry:
+                total = (farming * 0.15f + mapAwareness * 0.15f + decisionMakeing * 0.15f + fighting * 0.15f) + (pushing * 0.06f + Consistency * 0.06f + laneControl * 0.06f + Positioning * 0.06f + teamWork * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + roaming * 0.025f);
+                break;             
+            case Position.Mid:
+                total = (fighting * 0.15f + mapAwareness * 0.15f + laneControl * 0.15f + farming * 0.15f) + (decisionMakeing * 0.06f + roaming * 0.06f + Consistency * 0.06f + teamWork * 0.06f + Positioning * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + pushing * 0.025f);
+                break;
+            case Position.Offlane:
+                total = (fighting * 0.15f + Positioning * 0.15f + laneControl * 0.15f + Consistency * 0.15f) + (decisionMakeing * 0.06f + farming * 0.06f + roaming * 0.06f + teamWork * 0.06f + pushing * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + mapAwareness * 0.025f);
+                break;
         }
     }
 
