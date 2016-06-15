@@ -49,7 +49,8 @@ public class GameCore : MonoBehaviour {
 			Debug.Log(playersInTeam[i]);
 		}
         foreach (DotaPlayer member in team.getList()) {
-            TeamPlayers.text = TeamPlayers.text + Math.Round((float)member.total) + "\n";
+            // position and rating
+            TeamPlayers.text = TeamPlayers.text + member.GetPos() + " " + Math.Round((float)member.total) + "\n";
         }
     }
     void LateUpdate()

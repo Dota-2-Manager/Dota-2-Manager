@@ -10,6 +10,20 @@ public class NewPlayerGen{
     private System.Random ran = new System.Random(ranseed);
 
     // Update is called once per frame
+
+    // Role is based on farm priority 1-5
+    public DotaPlayer MakeNewRandomPlayerWithSetRole(int p)
+    {
+        a = new DotaPlayer();
+        a.SetPos(p); 
+        // default pos was 0 in DotaPlayer constructor
+        // Enumerator took care of it and defaulted to FourthPositionSup
+
+        a.setAll(ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20), ran.Next(1, 20));
+        a.CalculateTotal();
+        return a;
+    }
+
     public DotaPlayer MakeNewRandomPlayer ()
     {
         a = new DotaPlayer();

@@ -75,11 +75,40 @@ public class DotaPlayer{
         Positioning = l;
         pushing = m;
         riskTakeing = n;
-        roaming = 0;
+        roaming = o;
         Support = p;
         teamWork = q;
         warding = r;
     }    
+
+    public void SetPos(int p)
+        // sets a position based on farm priority
+    {
+        switch (p)
+        {
+            case 1:
+                CurrentRole = Position.Carry;
+                break;
+            case 2:
+                CurrentRole = Position.Mid;
+                break;
+            case 3:
+                CurrentRole = Position.Offlane;
+                break;
+            case 4:
+                CurrentRole = Position.FourthPositionSup;
+                break;
+            case 5:
+                CurrentRole = Position.FifthPositionSup;
+                break;
+        }
+    }
+
+
+    public Position GetPos()
+    {
+        return CurrentRole;
+    }
 }
 
 

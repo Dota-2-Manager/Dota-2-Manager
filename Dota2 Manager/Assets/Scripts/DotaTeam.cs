@@ -19,7 +19,8 @@ public class DotaTeam {
         gen = new NewPlayerGen();
         for (int i = 0; i < 5; i++)
         {
-            players.Add(gen.MakeNewRandomPlayer());
+            // int to specify role
+            players.Add(gen.MakeNewRandomPlayerWithSetRole(i+1));
         }
         CalculateTeamTotalValue();
     }
