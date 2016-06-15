@@ -1,5 +1,6 @@
-"players": [
+{"players": [
 
+    /*
 	{
 	"name": "TEMPLATE DO NOT REQUEST",
 	"country": "",
@@ -27,6 +28,7 @@
 	"Offlane": ,
 	"Support": 
 	},
+    */
 	{
 	"name": "Miracle",
 	"country": "Jordan",
@@ -568,3 +570,5 @@
 	"Support": 5
 	}
 ]
+}
+

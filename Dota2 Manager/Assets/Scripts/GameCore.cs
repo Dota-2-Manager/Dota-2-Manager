@@ -31,6 +31,7 @@ public class GameCore : MonoBehaviour {
     public Text TeamValue;
     private DotaTeam team = new DotaTeam("NewBee");
     public int currentmember = 0;
+    public Text TeamPlayers;
 
     private int Cash;
 
@@ -42,11 +43,14 @@ public class GameCore : MonoBehaviour {
 
 		jsonString = File.ReadAllText(Application.dataPath + "/Resources/playersInfo.json");
 		playerData = JsonMapper.ToObject (jsonString);
-		GetPlayer ("OG", "players");
+		GetPlayer ("Navi", "name");
 		for (int i = 0; i < 5; i++) 
 		{
 			Debug.Log(playersInTeam[i]);
 		}
+        foreach (DotaPlayer member in team.getList()) {
+            TeamPlayers.text = TeamPlayers.text + Math.Round((float)member.total) + "\n";
+        }
     }
     void LateUpdate()
     {
@@ -62,7 +66,7 @@ public class GameCore : MonoBehaviour {
         Farming.text = "Farming: " + team.getList()[currentmember].farming.ToString();
         pushing.text = "Pushing: " + team.getList()[currentmember].pushing.ToString();
         fighting.text = "Fighting: " + team.getList()[currentmember].fighting.ToString();
-        playertotal.text = "Players Total Ability" + Mathf.Round((float)team.getList()[currentmember].total).ToString();
+        playertotal.text = "Players Total Ability: " + Mathf.Round((float)team.getList()[currentmember].total).ToString();
         
     }
 	
@@ -144,5 +148,4 @@ public class GameCore : MonoBehaviour {
 		//Return the first position as returning null seems to pause unity
 		return playerData["players"][0];
 	}
-		
 }
