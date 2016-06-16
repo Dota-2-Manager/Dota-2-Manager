@@ -18,6 +18,7 @@ from openpyxl import load_workbook
 
 sheets = []
 players = []
+pl2 = []
 
 #Loads the whole excel file
 wb = load_workbook('Attribute Sheet.xlsx')
@@ -37,7 +38,9 @@ while (i < b):
 #Fills every player list with 1 empty info so that they can have their own row
 for i in range(0, len(sheets)):
     players.append([])
+    pl2.append([])
 
+f = open('playersInfo1.json', 'w')
 #Adds every player to hiw own row in a list
 for i in range(0, len(sheets)):
     sheet = wb.get_sheet_by_name(sheets[i])
@@ -76,73 +79,48 @@ for i in range(0, len(sheets)):
     try:
         players[i][2] = date.isoformat(players[i][2])
     except TypeError:
-        print(players[i][0])
-        print(players[i][2])
-        print("---------")
+        #print(players[i][0])
+        #print(players[i][2])
+        #print("---------")
         pass
-    
-#print(players[10])
-#exit()
-#for i in range(0, len(players)):
-#print(players[i][24])
-#print(date.isoformat(players[10][2]))
+
+    #Dumps the whole data to the json file
+    pl2[i] = {'Name': players[i][0], 
+    'Country': players[i][1], 
+    'BirthDate': players[i][2],
+    'Team': players[i][3], 
+    'Stats':{
+    'Happiness': players[i][4],
+    'Greed': players[i][5],
+    'CurrentRole': players[i][6],
+    'Pushing': players[i][7],
+    'Farming': players[i][8],
+    'Fighting': players[i][9],
+    'Warding': players[i][10],
+    'Positioning': players[i][11],
+    'MapAwareness': players[i][12],
+    'DecisionMaking': players[i][13],
+    'Roaming': players[i][14],
+    'LaneControl': players[i][15],
+    'RiskTaking': players[i][16],
+    'Flair': players[i][17],
+    'Consistency': players[i][18],
+    'TeamWork': players[i][19],
+    'Leadership': players[i][20]
+    }, 
+    'PositionPreference':{
+    'Poistion_1': players[i][21],
+    'Poistion_2': players[i][22],
+    'Poistion_3': players[i][23],
+    'Poistion_4': players[i][24],
+    'Poistion_5': players[i][25]
+    }}
+json.dump({'players': pl2}, f, indent=4)
 
 
 
-"""
-# Dump every player to their own array without any names
-f = open('playersInfo.json', 'w')
 
-#print(json.dumps(players[0]))
 
-json.dump(players[0], f)
-json.dump(players[1], f)
 
-f.closed
-"""
-
-f = open('playersInfo.json', 'w')
-
-f.write('{"players":[\n')
-
-#Writes line by line every stat for each player
-
-#for i in range(10, 13):
-for i in range(10, len(players)):
-    f.write('\t{\n')
-    f.write('\t"Name": "'+players[i][0]+'",\n')
-    f.write('\t"Country": "'+players[i][1]+'",\n')
-    f.write('\t"Age": "'+players[i][2]+'",\n')
-    f.write('\t"Team": "'+players[i][3]+'",\n')
-    f.write('\t"Happiness": '+str(players[i][4])+',\n')
-    f.write('\t"Greed": '+str(players[i][5])+',\n')
-    f.write('\t"CurrentRole": "'+str(players[i][6])+'",\n')
-    f.write('\t"Pushing": '+str(players[i][7])+',\n')
-    f.write('\t"Farming": '+str(players[i][8])+',\n')
-    f.write('\t"Fighting": '+str(players[i][9])+',\n')
-    f.write('\t"Warding": '+str(players[i][10])+',\n')
-    f.write('\t"Positioning": '+str(players[i][11])+',\n')
-    f.write('\t"MapAwareness": '+str(players[i][12])+',\n')
-    f.write('\t"DecisionMakeing": '+str(players[i][13])+',\n')
-    f.write('\t"Roaming": '+str(players[i][14])+',\n')
-    f.write('\t"LaneControl": '+str(players[i][15])+',\n')
-    f.write('\t"RiskTakeing": '+str(players[i][16])+',\n')
-    f.write('\t"Flair": '+str(players[i][17])+',\n')
-    f.write('\t"Consistency": '+str(players[i][18])+',\n')
-    f.write('\t"TeamWork": '+str(players[i][19])+',\n')
-    f.write('\t"Leadership": '+str(players[i][20])+',\n')
-    f.write('\t"Position_1": '+str(players[i][21])+',\n')
-    f.write('\t"Position_2": '+str(players[i][22])+',\n')
-    f.write('\t"Position_3": '+str(players[i][23])+',\n')
-    f.write('\t"Position_4": '+str(players[i][24])+',\n')
-    f.write('\t"Position_5": '+str(players[i][25])+'\n')
-
-    if(i == (len(players) - 1)):
-        f.write('\t}\n')    
-    else:
-        f.write('\t},\n')
-
-f.write(']\n')
-f.write('}\n')
 
 f.closed
