@@ -18,6 +18,6 @@ risk taking, flair, consistency, teamwork, leadership
 
 b14, b15, b16, b17, b18
 
-carry, mid, off, support
+carry, mid, off, support4, support 5
 
-d14, d15, d16, d17
+d14, d15, d16, d17, d18
