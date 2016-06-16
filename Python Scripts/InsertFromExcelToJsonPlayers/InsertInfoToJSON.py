@@ -71,6 +71,7 @@ for i in range(0, len(sheets)):
     players[i].append(sheet['D15'].value)
     players[i].append(sheet['D16'].value) 
     players[i].append(sheet['D17'].value)
+    players[i].append(sheet['D18'].value)
 
     try:
         players[i][2] = date.isoformat(players[i][2])
@@ -130,12 +131,13 @@ for i in range(10, len(players)):
     f.write('\t"consistency": '+str(players[i][18])+',\n')
     f.write('\t"teamWork": '+str(players[i][19])+',\n')
     f.write('\t"leadership": '+str(players[i][20])+',\n')
-    f.write('\t"Carry": '+str(players[i][21])+',\n')
-    f.write('\t"Mid": '+str(players[i][22])+',\n')
-    f.write('\t"Offlane": '+str(players[i][23])+',\n')
-    f.write('\t"Support": '+str(players[i][24])+'\n')
+    f.write('\t"Position 1": '+str(players[i][21])+',\n')
+    f.write('\t"Position 2": '+str(players[i][22])+',\n')
+    f.write('\t"Position 3": '+str(players[i][23])+',\n')
+    f.write('\t"Position 4": '+str(players[i][24])+',\n')
+    f.write('\t"Position 5": '+str(players[i][25])+'\n')
 
-    if(i == 12):
+    if(i == (len(players) - 1)):
         f.write('\t}\n')    
     else:
         f.write('\t},\n')
