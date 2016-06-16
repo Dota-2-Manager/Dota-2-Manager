@@ -6,7 +6,7 @@ from openpyxl import load_workbook
 
 #README
 #This is still ín testing, there may exist bug I didn't find
-#For age make sure that all dates you get from the excel sheet are in real date format and not strings
+#For age make sure that all dates you get from the excel sheet are in real date format and not strings or that hey are N/A
 
 #How to use:
 #1. Download the spreadsheet with the info
@@ -18,7 +18,7 @@ from openpyxl import load_workbook
 
 sheets = []
 players = []
-pl2 = []
+ages = []
 
 #Loads the whole excel file
 wb = load_workbook('Attribute Sheet.xlsx')
@@ -38,89 +38,50 @@ while (i < b):
 #Fills every player list with 1 empty info so that they can have their own row
 for i in range(0, len(sheets)):
     players.append([])
-    pl2.append([])
 
-f = open('playersInfo1.json', 'w')
-#Adds every player to hiw own row in a list
+f = open('playersInfo.json', 'w')
+
+#Adds every player to his own ron in the json input
 for i in range(0, len(sheets)):
     sheet = wb.get_sheet_by_name(sheets[i])
-    players[i].append(sheet['B2'].value)
-    players[i].append(sheet['B3'].value)
-    players[i].append(sheet['F2'].value)
-    players[i].append(sheet['F3'].value)
-
-    players[i].append(sheet['F7'].value)
-    players[i].append(sheet['F8'].value)
-    players[i].append(sheet['F9'].value)
-
-    players[i].append(sheet['B7'].value) 
-    players[i].append(sheet['B8'].value)
-    players[i].append(sheet['B9'].value)
-    players[i].append(sheet['B10'].value)
-
-    players[i].append(sheet['D7'].value)
-    players[i].append(sheet['D8'].value)
-    players[i].append(sheet['D9'].value)
-    players[i].append(sheet['D10'].value)
-    players[i].append(sheet['D11'].value)
-
-    players[i].append(sheet['B14'].value)
-    players[i].append(sheet['B15'].value)
-    players[i].append(sheet['B16'].value)
-    players[i].append(sheet['B17'].value) 
-    players[i].append(sheet['B18'].value)
-
-    players[i].append(sheet['D14'].value)
-    players[i].append(sheet['D15'].value)
-    players[i].append(sheet['D16'].value) 
-    players[i].append(sheet['D17'].value)
-    players[i].append(sheet['D18'].value)
+    ages.append(sheet['F2'].value)
 
     try:
-        players[i][2] = date.isoformat(players[i][2])
+        ages[i] = date.isoformat(ages[i])
     except TypeError:
-        #print(players[i][0])
-        #print(players[i][2])
-        #print("---------")
         pass
 
     #Dumps the whole data to the json file
-    pl2[i] = {'Name': players[i][0], 
-    'Country': players[i][1], 
-    'BirthDate': players[i][2],
-    'Team': players[i][3], 
+    players[i] = {'Name': sheet['B2'].value, 
+    'Country': sheet['B3'].value, 
+    'BirthDate': ages[i],
+    'Team': sheet['F3'].value, 
     'Stats':{
-    'Happiness': players[i][4],
-    'Greed': players[i][5],
-    'CurrentRole': players[i][6],
-    'Pushing': players[i][7],
-    'Farming': players[i][8],
-    'Fighting': players[i][9],
-    'Warding': players[i][10],
-    'Positioning': players[i][11],
-    'MapAwareness': players[i][12],
-    'DecisionMaking': players[i][13],
-    'Roaming': players[i][14],
-    'LaneControl': players[i][15],
-    'RiskTaking': players[i][16],
-    'Flair': players[i][17],
-    'Consistency': players[i][18],
-    'TeamWork': players[i][19],
-    'Leadership': players[i][20]
+    'Happiness': sheet['F7'].value,
+    'Greed': sheet['F8'].value,
+    'CurrentRole': sheet['F9'].value,
+    'Pushing': sheet['B7'].value,
+    'Farming': sheet['B8'].value,
+    'Fighting': sheet['B8'].value,
+    'Warding': sheet['B10'].value,
+    'Positioning': sheet['D7'].value,
+    'MapAwareness': sheet['D8'].value,
+    'DecisionMaking': sheet['D9'].value,
+    'Roaming': sheet['D10'].value,
+    'LaneControl': sheet['D11'].value,
+    'RiskTaking': sheet['B14'].value,
+    'Flair': sheet['B15'].value,
+    'Consistency': sheet['B16'].value,
+    'TeamWork': sheet['B17'].value,
+    'Leadership': sheet['B18'].value
     }, 
     'PositionPreference':{
-    'Poistion_1': players[i][21],
-    'Poistion_2': players[i][22],
-    'Poistion_3': players[i][23],
-    'Poistion_4': players[i][24],
-    'Poistion_5': players[i][25]
+    'Poistion_1': sheet['D14'].value,
+    'Poistion_2': sheet['D15'].value,
+    'Poistion_3': sheet['D16'].value,
+    'Poistion_4': sheet['D17'].value,
+    'Poistion_5': sheet['D18'].value
     }}
-json.dump({'players': pl2}, f, indent=4)
-
-
-
-
-
-
+json.dump({'players': players}, f, indent=4)
 
 f.closed
