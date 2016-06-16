@@ -31,6 +31,8 @@ public class DotaPlayer{
     public double Offlane { get; set; }
     public double Support { get; set; }
 
+    public string team;
+
     //total
     public double total;
 
@@ -45,7 +47,7 @@ public class DotaPlayer{
         {
             case Position.FourthPositionSup:
                 total = (roaming * 0.15d + warding * 0.15d + Positioning * 0.15d + laneControl * 0.15d) + (teamWork * 0.06f + fighting * 0.06f + farming * 0.06f + Consistency * 0.06f + decisionMakeing * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + pushing * 0.025f + mapAwareness * 0.025f);
-                Debug.Log(total);
+                //Debug.Log(total);
                 break;
             case Position.Carry:
                 total = (farming * 0.15f + mapAwareness * 0.15f + decisionMakeing * 0.15f + fighting * 0.15f) + (pushing * 0.06f + Consistency * 0.06f + laneControl * 0.06f + Positioning * 0.06f + teamWork * 0.06f) + (riskTakeing * 0.025f + flair * 0.025f + warding * 0.025f + roaming * 0.025f);
@@ -108,6 +110,16 @@ public class DotaPlayer{
     public Position GetPos()
     {
         return CurrentRole;
+    }
+
+    public void SetTeam(string t)
+    {
+        team = t;
+    }
+
+    public void SetName(string n)
+    {
+        name = n;
     }
 }
 

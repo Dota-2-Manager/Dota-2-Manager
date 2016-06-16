@@ -15,12 +15,36 @@ public class DotaTeam {
     public DotaTeam(string PTeamName)
     {
         
+        //if found existing team
         teamName = PTeamName;
-        gen = new NewPlayerGen();
-        for (int i = 0; i < 5; i++)
+
+        bool foundExistingTeam = false;
+        foreach (DotaTeam existingTeam in GameCore.teamsInGame)
         {
-            // int to specify role
-            players.Add(gen.MakeNewRandomPlayerWithSetRole(i+1));
+            if (teamName == existingTeam.GetTeamName())
+            {
+                //Debug.Log("Found a match");
+                foundExistingTeam = true;
+                foreach (DotaPlayer player in GameCore.allPlayers)
+                {
+                    if(player.team == teamName)
+                    {
+                        players.Add(player);
+                    }
+                }
+            }
+        }
+
+        // if no existing team found
+        if (!foundExistingTeam)
+        {
+            gen = new NewPlayerGen();
+
+            for (int i = 0; i < 5; i++)
+            {
+                // int to specify role
+                players.Add(gen.MakeNewRandomPlayerWithSetRole(i+1));
+            }
         }
         CalculateTeamTotalValue();
     }

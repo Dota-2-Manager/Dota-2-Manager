@@ -9,9 +9,13 @@ public class GameCore : MonoBehaviour {
 
 	//This are for requesting the teams info
 	private string jsonString;
-	private JsonData playerData;
+	public static JsonData playerData;
+    public static List<DotaPlayer> allPlayers = new List<DotaPlayer>();
 	private List<string> playersInTeam = new List<string>();
+	public static List<DotaTeam>  teamsInGame = new List<DotaTeam>();
 	//private JsonData test;
+
+    public GameObject selectTeamButton;
 
     public Sprite teamlogo;
     public Image logo;
@@ -29,7 +33,7 @@ public class GameCore : MonoBehaviour {
     public Text Name;
     public Text CashT;
     public Text TeamValue;
-    private DotaTeam team = new DotaTeam("NewBee");
+    private DotaTeam team = new DotaTeam("newteam");
     public int currentmember = 0;
     public Text TeamPlayers;
 
@@ -48,11 +52,16 @@ public class GameCore : MonoBehaviour {
 		{
 			Debug.Log(playersInTeam[i]);
 		}
-        foreach (DotaPlayer member in team.getList()) {
-            // position and rating
-            TeamPlayers.text = TeamPlayers.text + member.GetPos() + " " + Math.Round((float)member.total) + "\n";
-        }
+
+        RefreshTeamInfoDisplay();
+
+        // pull team list from player list json and generate buttons
+        GetTeams();
+        // populate list of DotaPlayer type with existing players
+        PopulatePlayerList();
+        GenerateTeamSelectButtons();
     }
+
     void LateUpdate()
     {
         if (currentmember == 5)
@@ -133,6 +142,43 @@ public class GameCore : MonoBehaviour {
 
     }
 
+    // populates a list of DotaPlayers with data from json
+    void PopulatePlayerList()
+    {
+		for(int i = 0; i< playerData["players"].Count; i++)
+        {
+            DotaPlayer p = new DotaPlayer();
+            p.SetPos((Int32.Parse(Convert.ToString(playerData["players"][i]["CurrentRole"]))));
+
+            int a_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Carry"]));
+            int b_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Consistency"]));
+            int c_ = Int32.Parse(Convert.ToString(playerData["players"][i]["decisionMakeing"]));
+            int d_ = Int32.Parse(Convert.ToString(playerData["players"][i]["farming"]));
+            int e_ = Int32.Parse(Convert.ToString(playerData["players"][i]["fighting"]));
+            int f_ = Int32.Parse(Convert.ToString(playerData["players"][i]["flair"]));
+            int g_ = Int32.Parse(Convert.ToString(playerData["players"][i]["laneControl"]));
+            int h_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Leadership"]));
+            int i_ = Int32.Parse(Convert.ToString(playerData["players"][i]["mapAwareness"]));
+            int j_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Mid"]));
+            int k_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Offlane"]));
+            int l_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Positioning"]));
+            int m_ = Int32.Parse(Convert.ToString(playerData["players"][i]["pushing"]));
+            int n_ = Int32.Parse(Convert.ToString(playerData["players"][i]["riskTakeing"]));
+            int o_ = Int32.Parse(Convert.ToString(playerData["players"][i]["roaming"]));
+            int p_ = Int32.Parse(Convert.ToString(playerData["players"][i]["Support"]));
+            int q_ = Int32.Parse(Convert.ToString(playerData["players"][i]["teamWork"]));
+            int r_ = Int32.Parse(Convert.ToString(playerData["players"][i]["warding"]));
+
+            string s_ = Convert.ToString(playerData["players"][i]["team"]);
+            string t_ = Convert.ToString(playerData["players"][i]["name"]);
+            
+            p.setAll(a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_, q_, r_);
+            p.SetTeam(s_);
+            p.SetName(t_);
+            p.CalculateTotal();
+            allPlayers.Add(p);
+        }
+    }
 
 	JsonData GetPlayer(string team, string type)
 	{
@@ -149,4 +195,62 @@ public class GameCore : MonoBehaviour {
 		//Return the first position as returning null seems to pause unity
 		return playerData["players"][0];
 	}
+
+    public void GetTeams()
+    {
+        teamsInGame.Clear();
+
+        List<string> foundTeams = new List<string>();
+
+		for(int i = 0; i < playerData["players"].Count; i++)
+        {
+            string teamName = playerData["players"][i]["team"].ToString();
+
+            DotaTeam t = new DotaTeam(teamName);
+            if (!foundTeams.Contains(teamName))
+            {
+                foundTeams.Add(teamName);
+                teamsInGame.Add(t);
+            }
+        }
+
+    }
+
+    public void GenerateTeamSelectButtons()
+    {
+        for(int i = 0; i < teamsInGame.Count; i++)
+        {
+            GameObject b = Instantiate(selectTeamButton);
+
+            //positioning
+            b.transform.SetParent(teamcanvis.transform, false);
+            b.transform.Translate(0,-20*i,0);
+
+            // set text
+            b.transform.GetChild(0).GetComponent<Text>().text = teamsInGame[i].GetTeamName();
+            // doesnt work if it uses just the index?
+            // workaround = use string
+            string s = "selected " + teamsInGame[i].GetTeamName() + " index " + i;
+            b.GetComponent<Button>().onClick.AddListener(() => SelectTeam(s));
+        }
+    }
+
+    public void SelectTeam(string s)
+    {
+        int index = Int32.Parse(s.Substring(s.Length - 1, 1));
+        team = new DotaTeam(teamsInGame[index].GetTeamName());
+        Debug.Log("selected " + team.GetTeamName());
+        RefreshTeamInfoDisplay();
+    }
+
+    public void RefreshTeamInfoDisplay()
+    {
+        TeamPlayers.text = "Team Stats:\n";
+        foreach (DotaPlayer member in team.getList()) {
+            //Debug.Log(member.total); //not updating!
+            // position and rating
+            TeamPlayers.text = TeamPlayers.text + member.name + " " + member.GetPos() + " " + Math.Round((float)member.total) + "\n";
+        }
+    }
 }
+
