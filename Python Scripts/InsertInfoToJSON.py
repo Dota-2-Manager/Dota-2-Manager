@@ -106,8 +106,8 @@ f.write('{"players":[\n')
 
 #Writes line by line every stat for each player
 
-#for i in range(10, len(players)):
-for i in range(10, 13):
+#for i in range(10, 13):
+for i in range(10, len(players)):
     f.write('\t{\n')
     f.write('\t"name": "'+players[i][0]+'",\n')
     f.write('\t"country": "'+players[i][1]+'",\n')
