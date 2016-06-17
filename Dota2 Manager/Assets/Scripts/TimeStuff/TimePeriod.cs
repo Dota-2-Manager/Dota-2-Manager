@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.TimeStuff
 {
-    class TimePeriod
+    public class TimePeriod
     {
         DateTime _start;
         public DateTime Start
@@ -14,5 +14,16 @@ namespace Assets.Scripts.TimeStuff
         DateTime _end;
         public DateTime End
         { get { return _end; } }
+
+        DateTime _current;
+        public DateTime CurrentDate
+        { get { return _current; } }
+
+        public TimePeriod(DateTime start, DateTime end)
+        {
+            _start = start;
+            _end = end;
+            _current = new DateTime(start.Year, start.Month, start.Day);
+        }
     }
 }
