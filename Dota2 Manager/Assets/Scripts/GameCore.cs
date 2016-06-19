@@ -7,13 +7,13 @@ using System;
 
 public class GameCore : MonoBehaviour {
 
-	//This are for requesting the teams info
-	private string jsonString;
-	public static JsonData playerData;
+    //This are for requesting the teams info
+    private string jsonString;
+    public static JsonData playerData;
     public static List<DotaPlayer> allPlayers = new List<DotaPlayer>();
-	private List<string> playersInTeam = new List<string>();
-	public static List<DotaTeam>  teamsInGame = new List<DotaTeam>();
-	//private JsonData test;
+    private List<string> playersInTeam = new List<string>();
+    public static List<DotaTeam>  teamsInGame = new List<DotaTeam>();
+    //private JsonData test;
 
     public GameObject selectTeamButton;
 
@@ -42,24 +42,73 @@ public class GameCore : MonoBehaviour {
     private System.Random ran = new System.Random();
     // Use this for initialization
     void Start () {
+
         ChangetoTeamView();
         Cash = 500000;
 
-		jsonString = File.ReadAllText(Application.dataPath + "/Resources/playersInfo.json");
-		playerData = JsonMapper.ToObject (jsonString);
-		GetPlayer ("Navi", "name");
-		for (int i = 0; i < 5; i++) 
-		{
-			Debug.Log(playersInTeam[i]);
-		}
+        jsonString = File.ReadAllText(Application.dataPath + "/Resources/playersInfo.json");
+        playerData = JsonMapper.ToObject (jsonString);
+        GetPlayer ("Navi", "name");
+        for (int i = 0; i < 5; i++)
+        {
+            Debug.Log(playersInTeam[i]);
+        }
 
         RefreshTeamInfoDisplay();
 
-        // pull team list from player list json and generate buttons
-        GetTeams();
         // populate list of DotaPlayer type with existing players
         PopulatePlayerList();
+        // pull team list from player list and generate buttons
+        GetTeams();
         GenerateTeamSelectButtons();
+
+        //----------------------------------------------
+        // example for match simulation START
+        Debug.Log("-----------------------");
+        DotaTeam tta = new DotaTeam("Alliance");
+        DotaTeam ttb = new DotaTeam("OG");
+        DotaTeam ttc = new DotaTeam("Newbee");
+        // creates match but doesn't simulate yet
+        DotaMatch ndm = new DotaMatch(tta, ttc, 5);
+
+        // simulates match
+        ndm.SimulateMatch();
+        string MatchResult = ndm.GetScore();
+
+        for (int x = 0; x < ndm.GetGameCount(); x++)
+        {
+            // gets winner for each game played
+            Debug.Log(ndm.GetGameWinner(x).GetTeamName().ToString());
+        }
+
+        // displays final match score
+        Debug.Log("test match score: " + MatchResult);
+
+        foreach (DotaTeam team in teamsInGame) {
+            Debug.Log (team.GetTeamName ());
+        }
+        // example for match simulation END
+        //----------------------------------------------
+        // example for removing player from team START
+        Debug.Log("-----------------------");
+        foreach (DotaPlayer x in teamsInGame[0].getList())
+        {
+            Debug.Log(x.name);
+        }
+        Debug.Log("-----------------------");
+
+        TeamManagement.RemovePlayerFromTeam("Miracle", TeamManagement.FindTeamByName("OG"));
+        // example for removing player from team END
+        //----------------------------------------------
+        // example for swapping players between two teams START
+        TeamManagement.SwapPlayersTeams("NoTail", "Hao");
+        foreach (DotaPlayer x in teamsInGame[0].getList())
+        {
+            Debug.Log(x.name);
+        }
+        // example for swapping players between two teams END
+        //----------------------------------------------
+
     }
 
     void LateUpdate()
@@ -77,11 +126,11 @@ public class GameCore : MonoBehaviour {
         pushing.text = "Pushing: " + team.getList()[currentmember].pushing.ToString();
         fighting.text = "Fighting: " + team.getList()[currentmember].fighting.ToString();
         playertotal.text = "Players Total Ability: " + Mathf.Round((float)team.getList()[currentmember].total).ToString();
-        
+
     }
-	
-	// Update is called once per frame
-	public void ChangePlayer ()
+
+    // Update is called once per frame
+    public void ChangePlayer ()
     {
         if (currentmember == 5) 
         {
@@ -91,7 +140,7 @@ public class GameCore : MonoBehaviour {
         {
             currentmember++;
         }
-	}
+    }
 
     public void ChangetoTeamView()
     {
@@ -145,7 +194,7 @@ public class GameCore : MonoBehaviour {
     // populates a list of DotaPlayers with data from json
     void PopulatePlayerList()
     {
-		for(int i = 0; i< playerData["players"].Count; i++)
+        for(int i = 0; i< playerData["players"].Count; i++)
         {
             DotaPlayer p = new DotaPlayer();
             p.SetPos((Int32.Parse(Convert.ToString(playerData["players"][i]["CurrentRole"]))));
@@ -180,40 +229,40 @@ public class GameCore : MonoBehaviour {
         }
     }
 
-	JsonData GetPlayer(string team, string type)
-	{
-		playersInTeam.Clear ();
-		for(int i = 0; i< playerData["players"].Count; i++)
-		{
-			if(playerData["players"][i]["team"].ToString() == team)
-			{
-				//test = playerData ["players"] [i];
-				playersInTeam.Add (Convert.ToString(playerData["players"][i][type]));
-			}
-		}
+    JsonData GetPlayer(string team, string type)
+    {
+        playersInTeam.Clear ();
+        for(int i = 0; i< playerData["players"].Count; i++)
+        {
+            if(playerData["players"][i]["team"].ToString() == team)
+            {
+                //test = playerData ["players"] [i];
+                playersInTeam.Add (Convert.ToString(playerData["players"][i][type]));
+            }
+        }
 
-		//Return the first position as returning null seems to pause unity
-		return playerData["players"][0];
-	}
+        //Return the first position as returning null seems to pause unity
+        return playerData["players"][0];
+    }
 
-    public void GetTeams()
+    public static void GetTeams()
     {
         teamsInGame.Clear();
 
         List<string> foundTeams = new List<string>();
 
-		for(int i = 0; i < playerData["players"].Count; i++)
+        foreach (DotaPlayer player in allPlayers)
         {
-            string teamName = playerData["players"][i]["team"].ToString();
-
-            DotaTeam t = new DotaTeam(teamName);
-            if (!foundTeams.Contains(teamName))
+            string discoveredTeamName = player.team;
+            if (!foundTeams.Contains(discoveredTeamName))
             {
-                foundTeams.Add(teamName);
-                teamsInGame.Add(t);
+                // add to team list if not yet added
+                foundTeams.Add(discoveredTeamName);
+                teamsInGame.Add(new DotaTeam(discoveredTeamName, 0));
             }
-        }
 
+            teamsInGame.Find(i => i.GetTeamName() == discoveredTeamName).AddPlayer(player);
+        }
     }
 
     public void GenerateTeamSelectButtons()
