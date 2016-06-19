@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
+using System.Threading;
 
 public class DotaGame
 {
     private DotaTeam teamA, teamB;
-    private System.Random ran = new System.Random();
     private DotaTeam winner;
     private DotaTeam loser;
     // other stats like score, kda, duration, etc...
@@ -20,35 +20,43 @@ public class DotaGame
     {
         // win/lose simulation for a game of dota between two teams
         // sets winner and loser variables, and returns winner
-        // mostly copied from GameCore.VsRandomTeam(), I don't know much about the math here - ivandaho
-        double x;
+
         DotaTeam betterTeam;
         DotaTeam worseTeam;
-        if (teamB.GetTotalValue() < teamA.GetTotalValue())
-        {
-            x = teamA.GetTotalValue() * (100 / teamB.GetTotalValue()) / 100;
-        }
-        else
-        {
-            x = teamB.GetTotalValue() * (100 / teamA.GetTotalValue()) / 100;
-        }
-        double percentage = 0.5d + (x - 1);
 
-        if (ran.NextDouble() >= percentage)
-        {
-            betterTeam = teamB;
-            worseTeam = teamA;
-        }
-        else
+        if (teamA.GetTotalValue() > teamB.GetTotalValue())
         {
             betterTeam = teamA;
             worseTeam = teamB;
         }
-        Debug.Log("teamA total = " + teamA.GetTotalValue() + " teamB total = " + teamB.GetTotalValue());
-        Debug.Log("x = " + x.ToString() + " percentage = " + percentage.ToString());
+        else
+        {
+            betterTeam = teamB;
+            worseTeam = teamA;
+        }
+        double x = Math.Abs(teamA.GetTotalValue() - teamB.GetTotalValue());
+        Debug.Log ("difference = " + x + " | better team: " + betterTeam.GetTeamName());
 
-        winner = betterTeam;
-        loser = worseTeam;
+        const double pow = 1.5;
+        double probability = Math.Log(x + 1, 21) + ((Math.Pow((1 - (Math.Log((x + 1), 21))), pow))/2d);
+
+        var ran = new System.Random ();
+
+        // sleep to avoid same random number. 5ms still has repeated values, 10 seems ok
+        Thread.Sleep (10);
+        double rng = ran.NextDouble ();
+        Debug.Log ("probability: " + probability + " | " + rng);
+
+        if (rng < probability) {
+            //better team wins a wins
+            winner = betterTeam;
+            loser = worseTeam;
+        }
+        else
+        {
+            winner = worseTeam;
+            loser = betterTeam;
+        }
 
         return winner;
     }
@@ -63,4 +71,3 @@ public class DotaGame
         return loser;
     }
 }
-

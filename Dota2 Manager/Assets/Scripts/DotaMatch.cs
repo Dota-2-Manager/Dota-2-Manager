@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class DotaMatch
@@ -7,10 +6,10 @@ public class DotaMatch
     private DotaTeam teamA, teamB;
     private int bestOf;
     private List<DotaGame> games = new List<DotaGame>();
-    private int scoreA = 0;
-    private int scoreB = 0;
-    private int maxScore = 0;
-    private bool finished = false;
+    private int scoreA;
+    private int scoreB;
+    private int maxScore;
+    private bool finished;
 
     // inits with team A, team B, bestOf
     public DotaMatch(DotaTeam a, DotaTeam b, int bo)
@@ -45,7 +44,7 @@ public class DotaMatch
 
     public void SimulateMatch()
     {
-        Debug.Log("Simulating best of " + bestOf.ToString());
+        Debug.Log("Simulating best of " + bestOf);
         int gamesPlayed = 0;
         // simulates a game if the winner is not determined yet
         while ((scoreA < maxScore) && (scoreB < maxScore))
@@ -68,15 +67,15 @@ public class DotaMatch
     // returns string value of score e.g. 3:2
     public string GetScore()
     {
-        string scoreString = "";
         if (!finished)
         {
             return null;
         }
         else
         {
-            scoreString = teamA.GetTeamName() + " " + scoreA.ToString() + ":"
-                           + scoreB.ToString() + " " + teamB.GetTeamName();
+            string scoreString;
+            scoreString = teamA.GetTeamName() + " " + scoreA + ":"
+                           + scoreB + " " + teamB.GetTeamName();
             return scoreString;
         }
 
@@ -111,26 +110,30 @@ public class DotaMatch
 }
 
 /* example to simulate match between two teams
+ * paste in GameCore.Start() AFTER intiation
  
+		//----------------------------------------------
+		DotaTeam tta = new DotaTeam("Alliance");
+		DotaTeam ttb = new DotaTeam("OG");
+		DotaTeam ttc = new DotaTeam("Newbee");
+		// creates match but doesn't simulate yet
+		DotaMatch ndm = new DotaMatch(tta, ttc, 5); 
 
-        // initiate two teams
-        DotaTeam tta = new DotaTeam("Alliance");
-        DotaTeam ttb = new DotaTeam("OG");
+		// simulates match
+		ndm.SimulateMatch();
+		string MatchResult = ndm.GetScore();
 
-        // creates match but doesn't simulate yet
-        DotaMatch ndm = new DotaMatch(tta, ttb, 5); 
-        
-        // simulates match
-        ndm.SimulateMatch();
-        string MatchResult = ndm.GetScore();
+		for (int x = 0; x < ndm.GetGameCount(); x++)
+		{
+			// gets winner for each game played
+			Debug.Log(ndm.GetGameWinner(x).GetTeamName().ToString());
+		}
 
-        for (int x = 0; x < ndm.GetGameCount(); x++)
-        {
-            // gets winner for each game played
-            Debug.Log(ndm.GetGameWinner(x).GetTeamName().ToString());
-        }
+		// displays final match score
+		Debug.Log("test match score: " + MatchResult);
 
-        // displays final match score
-        Debug.Log("test match score: " + MatchResult);
-   
-        */
+		foreach (DotaTeam team in teamsInGame) {
+			Debug.Log (team.GetTeamName ());
+		}
+		//----------------------------------------------
+*/
