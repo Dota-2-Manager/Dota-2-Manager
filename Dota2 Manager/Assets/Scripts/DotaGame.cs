@@ -9,10 +9,16 @@ public class DotaGame
     private DotaTeam loser;
     // other stats like score, kda, duration, etc...
 
+    private readonly int matchID;
+
+    //TODO: change to proper time implementation
+    public int tempTimeTick;
+
     public DotaGame(DotaTeam a, DotaTeam b)
     {
         teamA = a;
         teamB = b;
+        matchID = MatchHistory.IncrementGameCount();
         //SimulateGame();
     }
 
@@ -70,4 +76,16 @@ public class DotaGame
     {
         return loser;
     }
+
+    public int GetMatchID()
+    {
+        return matchID;
+    }
+
+    public override string ToString()
+    {
+        return "matchID " + matchID + " " + teamA + " vs " + teamB + " | winner: " + winner;
+    }
+
+
 }

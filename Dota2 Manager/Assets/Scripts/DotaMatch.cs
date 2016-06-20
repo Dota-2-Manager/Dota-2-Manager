@@ -49,8 +49,9 @@ public class DotaMatch
         // simulates a game if the winner is not determined yet
         while ((scoreA < maxScore) && (scoreB < maxScore))
         {
-            games.Add(new DotaGame(teamA, teamB));
-            if (games[gamesPlayed].SimulateGame() == teamA)
+            DotaGame g = new DotaGame(teamA, teamB);
+
+            if (g.SimulateGame() == teamA)
             {
                 scoreA += 1;
             }
@@ -58,6 +59,9 @@ public class DotaMatch
             {
                 scoreB += 1;
             }
+
+            games.Add(g);
+            MatchHistory.RecordGame(g);
 
             gamesPlayed += 1;
         }
@@ -82,7 +86,7 @@ public class DotaMatch
     }
     
     // returns winning team of series
-    public DotaTeam GetResult()
+    public DotaTeam GetWinner()
     {
         if (!finished)
         {
