@@ -56,7 +56,7 @@ public class DotaTeam {
         CalculateTeamTotalValue();
     }
 
-    public List<DotaPlayer> getList()
+    public List<DotaPlayer> GetList()
     {
         return players;
     }

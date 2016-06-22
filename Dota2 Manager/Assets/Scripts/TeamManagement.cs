@@ -21,10 +21,10 @@ public static class TeamManagement
         DotaTeam foundteam = GameCore.teamsInGame.Find(i => i.GetTeamName() == teamname);
         if (foundteam != null)
         {
-            DotaPlayer foundplayer = foundteam.getList().Find(p => p.name == playername);
+            DotaPlayer foundplayer = foundteam.GetList().Find(p => p.name == playername);
             if (foundplayer != null)
             {
-                 foundteam.getList().Remove(foundplayer);
+                 foundteam.GetList().Remove(foundplayer);
                 Debug.Log("removed " + foundplayer.name + " from team " + foundteam.GetTeamName());
             }
             else
@@ -44,10 +44,10 @@ public static class TeamManagement
         DotaTeam foundteam = GameCore.teamsInGame.Find(i => i == team) ;
         if (foundteam != null)
         {
-            DotaPlayer foundplayer = foundteam.getList().Find(p => p.name == playername);
+            DotaPlayer foundplayer = foundteam.GetList().Find(p => p.name == playername);
             if (foundplayer != null)
             {
-                 foundteam.getList().Remove(foundplayer);
+                 foundteam.GetList().Remove(foundplayer);
                 Debug.Log("removed " + foundplayer.name + " from team " + team.GetTeamName());
             }
             else
@@ -68,10 +68,10 @@ public static class TeamManagement
         DotaTeam foundteam = GameCore.teamsInGame.Find(i => i.GetTeamName() == teamname);
         if (foundteam != null)
         {
-            DotaPlayer foundplayer = foundteam.getList().Find(p => p == player);
+            DotaPlayer foundplayer = foundteam.GetList().Find(p => p == player);
             if (foundplayer != null)
             {
-                 foundteam.getList().Remove(foundplayer);
+                 foundteam.GetList().Remove(foundplayer);
                 Debug.Log("removed " + foundplayer.name + " from team " + foundteam.GetTeamName());
             }
             else
@@ -92,10 +92,10 @@ public static class TeamManagement
         DotaTeam foundteam = GameCore.teamsInGame.Find(i => i == team) ;
         if (foundteam != null)
         {
-            DotaPlayer foundplayer = foundteam.getList().Find(p => p == player);
+            DotaPlayer foundplayer = foundteam.GetList().Find(p => p == player);
             if (foundplayer != null)
             {
-                 foundteam.getList().Remove(foundplayer);
+                 foundteam.GetList().Remove(foundplayer);
                 Debug.Log("removed " + foundplayer.name + " from team " + team.GetTeamName());
             }
             else

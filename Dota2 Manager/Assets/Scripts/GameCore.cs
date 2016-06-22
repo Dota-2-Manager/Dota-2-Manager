@@ -91,7 +91,7 @@ public class GameCore : MonoBehaviour {
         //----------------------------------------------
         // example for removing player from team START
         Debug.Log("-----------------------");
-        foreach (DotaPlayer x in teamsInGame[0].getList())
+        foreach (DotaPlayer x in teamsInGame[0].GetList())
         {
             Debug.Log(x.name);
         }
@@ -102,7 +102,7 @@ public class GameCore : MonoBehaviour {
         //----------------------------------------------
         // example for swapping players between two teams START
         TeamManagement.SwapPlayersTeams("NoTail", "Hao");
-        foreach (DotaPlayer x in teamsInGame[0].getList())
+        foreach (DotaPlayer x in teamsInGame[0].GetList())
         {
             Debug.Log(x.name);
         }
@@ -119,13 +119,13 @@ public class GameCore : MonoBehaviour {
         }
         TeamValue.text = "Team total score " + Mathf.Round((float)team.GetTotalValue());
         CashT.text = "$" + Cash;
-        Name.text = "Name: " + team.getList()[currentmember].name;
-        Descisionmakeing.text = "Decision Makeing: " + team.getList()[currentmember].decisionMakeing.ToString();
-        Calm.text = "Risktakeing: " + team.getList()[currentmember].riskTakeing.ToString();
-        Farming.text = "Farming: " + team.getList()[currentmember].farming.ToString();
-        pushing.text = "Pushing: " + team.getList()[currentmember].pushing.ToString();
-        fighting.text = "Fighting: " + team.getList()[currentmember].fighting.ToString();
-        playertotal.text = "Players Total Ability: " + Mathf.Round((float)team.getList()[currentmember].total).ToString();
+        Name.text = "Name: " + team.GetList()[currentmember].name;
+        Descisionmakeing.text = "Decision Makeing: " + team.GetList()[currentmember].decisionMakeing.ToString();
+        Calm.text = "Risktakeing: " + team.GetList()[currentmember].riskTakeing.ToString();
+        Farming.text = "Farming: " + team.GetList()[currentmember].farming.ToString();
+        pushing.text = "Pushing: " + team.GetList()[currentmember].pushing.ToString();
+        fighting.text = "Fighting: " + team.GetList()[currentmember].fighting.ToString();
+        playertotal.text = "Players Total Ability: " + Mathf.Round((float)team.GetList()[currentmember].total).ToString();
 
     }
 
@@ -295,11 +295,10 @@ public class GameCore : MonoBehaviour {
     public void RefreshTeamInfoDisplay()
     {
         TeamPlayers.text = "Team Stats:\n";
-        foreach (DotaPlayer member in team.getList()) {
+        foreach (DotaPlayer member in team.GetList()) {
             //Debug.Log(member.total); //not updating!
             // position and rating
             TeamPlayers.text = TeamPlayers.text + member.name + " " + member.GetPos() + " " + Math.Round((float)member.total) + "\n";
         }
     }
 }
-
