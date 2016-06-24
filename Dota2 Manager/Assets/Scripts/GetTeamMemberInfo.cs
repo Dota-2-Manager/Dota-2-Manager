@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Assets.Scripts;
 public class GetTeamMemberInfo : MonoBehaviour
 {
-    DotaPlayer selectedPlayer = null;
+    DotaPlayer selectedPlayer;
 
     public GameObject _statbar_t1_1;
     public GameObject _statbar_t1_2;
@@ -127,21 +126,10 @@ public class GetTeamMemberInfo : MonoBehaviour
         }
 
         selectedPlayer = playerList.Find(i => i.name == n);
-        stat_t1_1 = selectedPlayer.roaming;
-        stat_t1_2 = selectedPlayer.warding;
-        stat_t1_3 = selectedPlayer.Positioning;
-        stat_t1_4 = selectedPlayer.laneControl;
 
-        stat_t2_1 = selectedPlayer.teamWork;
-        stat_t2_2 = selectedPlayer.fighting;
-        stat_t2_3 = selectedPlayer.farming;
-        stat_t2_4 = selectedPlayer.Consistency;
-        stat_t2_5 = selectedPlayer.decisionMakeing;
+        ReassignStatImportance(selectedPlayer);
+        UpdateBarText(selectedPlayer);
 
-        stat_t3_1 = selectedPlayer.riskTakeing;
-        stat_t3_2 = selectedPlayer.flair;
-        stat_t3_3 = selectedPlayer.pushing;
-        stat_t3_4 = selectedPlayer.mapAwareness;
     }
 
     public void RefreshWithNewData(string memberName)
@@ -190,7 +178,7 @@ public class GetTeamMemberInfo : MonoBehaviour
         string role = playerList.Find(i => i.name == p).GetPos().ToString();
         Debug.Log(role);
     }
-    
+
     public void DisableCurrentRoleBtn(int i)
     {
         _btn_role_1.interactable = true;
@@ -230,6 +218,199 @@ public class GetTeamMemberInfo : MonoBehaviour
         selectedPlayer.SetPos(pos);
         Debug.Log("switched roles. " + selectedPlayer.name + " is now " + selectedPlayer.GetPos() + ", " + switchedout.name + " is now " + switchedout.GetPos());
         DisableCurrentRoleBtn((int)selectedPlayer.GetPos());
+        RefreshWithNewData(selectedPlayer.name);
+    }
+
+    public void ReassignStatImportance(DotaPlayer p)
+    {
+        switch ((int)p.GetPos())
+        {
+            case 1:
+                // carry calcs
+                stat_t1_1 = selectedPlayer.farming;
+                stat_t1_2 = selectedPlayer.mapAwareness;
+                stat_t1_3 = selectedPlayer.decisionMakeing;
+                stat_t1_4 = selectedPlayer.fighting;
+
+                stat_t2_1 = selectedPlayer.pushing;
+                stat_t2_2 = selectedPlayer.Consistency;
+                stat_t2_3 = selectedPlayer.laneControl;
+                stat_t2_4 = selectedPlayer.Positioning;
+                stat_t2_5 = selectedPlayer.teamWork;
+
+                stat_t3_1 = selectedPlayer.riskTakeing;
+                stat_t3_2 = selectedPlayer.flair;
+                stat_t3_3 = selectedPlayer.warding;
+                stat_t3_4 = selectedPlayer.roaming;
+                break;
+            case 2:
+                // mid calcs
+                stat_t1_1 = selectedPlayer.laneControl;
+                stat_t1_2 = selectedPlayer.farming;
+                stat_t1_3 = selectedPlayer.mapAwareness;
+                stat_t1_4 = selectedPlayer.fighting;
+
+                stat_t2_1 = selectedPlayer.Consistency;
+                stat_t2_2 = selectedPlayer.decisionMakeing;
+                stat_t2_3 = selectedPlayer.roaming;
+                stat_t2_4 = selectedPlayer.Positioning;
+                stat_t2_5 = selectedPlayer.teamWork;
+
+                stat_t3_1 = selectedPlayer.riskTakeing;
+                stat_t3_2 = selectedPlayer.flair;
+                stat_t3_3 = selectedPlayer.pushing;
+                stat_t3_4 = selectedPlayer.warding;
+                break;
+            case 3:
+                // offlane calcs
+                stat_t1_1 = selectedPlayer.fighting;
+                stat_t1_2 = selectedPlayer.Positioning;
+                stat_t1_3 = selectedPlayer.laneControl;
+                stat_t1_4 = selectedPlayer.Consistency;
+
+                stat_t2_1 = selectedPlayer.decisionMakeing;
+                stat_t2_2 = selectedPlayer.farming;
+                stat_t2_3 = selectedPlayer.roaming;
+                stat_t2_4 = selectedPlayer.teamWork;
+                stat_t2_5 = selectedPlayer.pushing;
+
+                stat_t3_1 = selectedPlayer.mapAwareness;
+                stat_t3_2 = selectedPlayer.riskTakeing;
+                stat_t3_3 = selectedPlayer.flair;
+                stat_t3_4 = selectedPlayer.warding;
+                break;
+            case 4:
+                // support calcs
+                stat_t1_1 = selectedPlayer.roaming;
+                stat_t1_2 = selectedPlayer.warding;
+                stat_t1_3 = selectedPlayer.Positioning;
+                stat_t1_4 = selectedPlayer.laneControl;
+
+                stat_t2_1 = selectedPlayer.teamWork;
+                stat_t2_2 = selectedPlayer.fighting;
+                stat_t2_3 = selectedPlayer.farming;
+                stat_t2_4 = selectedPlayer.Consistency;
+                stat_t2_5 = selectedPlayer.decisionMakeing;
+
+                stat_t3_1 = selectedPlayer.riskTakeing;
+                stat_t3_2 = selectedPlayer.flair;
+                stat_t3_3 = selectedPlayer.pushing;
+                stat_t3_4 = selectedPlayer.mapAwareness;
+                break;
+            case 5:
+                // support calcs (same as 4)
+                stat_t1_1 = selectedPlayer.roaming;
+                stat_t1_2 = selectedPlayer.warding;
+                stat_t1_3 = selectedPlayer.Positioning;
+                stat_t1_4 = selectedPlayer.laneControl;
+
+                stat_t2_1 = selectedPlayer.teamWork;
+                stat_t2_2 = selectedPlayer.fighting;
+                stat_t2_3 = selectedPlayer.farming;
+                stat_t2_4 = selectedPlayer.Consistency;
+                stat_t2_5 = selectedPlayer.decisionMakeing;
+
+                stat_t3_1 = selectedPlayer.riskTakeing;
+                stat_t3_2 = selectedPlayer.flair;
+                stat_t3_3 = selectedPlayer.pushing;
+                stat_t3_4 = selectedPlayer.mapAwareness;
+                break;
+        }
+
+
+    }
+
+    public void UpdateBarText(DotaPlayer p)
+    {
+        switch ((int)p.GetPos())
+        {
+            case 1:
+                // carry calcs
+                _statbar_t1_1.GetComponentInChildren<Text>().text = "FARMING";
+                _statbar_t1_2.GetComponentInChildren<Text>().text = "MAP AWARENESS";
+                _statbar_t1_3.GetComponentInChildren<Text>().text = "DECISION MAKING";
+                _statbar_t1_4.GetComponentInChildren<Text>().text = "FIGHTING";
+
+                _statbar_t2_1.GetComponentInChildren<Text>().text = "PUSHING";
+                _statbar_t2_2.GetComponentInChildren<Text>().text = "CONSISTENCY";
+                _statbar_t2_3.GetComponentInChildren<Text>().text = "LANE CONTROL";
+                _statbar_t2_4.GetComponentInChildren<Text>().text = "POSITIONING";
+                _statbar_t2_5.GetComponentInChildren<Text>().text = "TEAMWORK";
+
+                _statbar_t3_1.GetComponentInChildren<Text>().text = "RISK TAKING";
+                _statbar_t3_2.GetComponentInChildren<Text>().text = "FLAIR";
+                _statbar_t3_3.GetComponentInChildren<Text>().text = "WARDING";
+                _statbar_t3_4.GetComponentInChildren<Text>().text = "ROAMING";
+                break;
+            case 2:
+                _statbar_t1_1.GetComponentInChildren<Text>().text = "LANE CONTROL";
+                _statbar_t1_2.GetComponentInChildren<Text>().text = "FARMING";
+                _statbar_t1_3.GetComponentInChildren<Text>().text = "MAP AWARENESS";
+                _statbar_t1_4.GetComponentInChildren<Text>().text = "FIGHTING";
+
+                _statbar_t2_1.GetComponentInChildren<Text>().text = "CONSISTENCY";
+                _statbar_t2_2.GetComponentInChildren<Text>().text = "DECISION MAKING";
+                _statbar_t2_3.GetComponentInChildren<Text>().text = "ROAMING";
+                _statbar_t2_4.GetComponentInChildren<Text>().text = "POSITIONING";
+                _statbar_t2_5.GetComponentInChildren<Text>().text = "TEAMWORK";
+
+                _statbar_t3_1.GetComponentInChildren<Text>().text = "RISK TAKING";
+                _statbar_t3_2.GetComponentInChildren<Text>().text = "FLAIR";
+                _statbar_t3_3.GetComponentInChildren<Text>().text = "PUSHING";
+                _statbar_t3_4.GetComponentInChildren<Text>().text = "WARDING";
+                break;
+            case 3:
+                _statbar_t1_1.GetComponentInChildren<Text>().text = "FIGHTING";
+                _statbar_t1_2.GetComponentInChildren<Text>().text = "POSITIONING";
+                _statbar_t1_3.GetComponentInChildren<Text>().text = "LANE CONTROL";
+                _statbar_t1_4.GetComponentInChildren<Text>().text = "CONSISTENCY";
+
+                _statbar_t2_1.GetComponentInChildren<Text>().text = "DECISION MAKING";
+                _statbar_t2_2.GetComponentInChildren<Text>().text = "FARMING";
+                _statbar_t2_3.GetComponentInChildren<Text>().text = "ROAMING";
+                _statbar_t2_4.GetComponentInChildren<Text>().text = "TEAMWORK";
+                _statbar_t2_5.GetComponentInChildren<Text>().text = "PUSHING";
+
+                _statbar_t3_1.GetComponentInChildren<Text>().text = "MAP AWARENESS";
+                _statbar_t3_2.GetComponentInChildren<Text>().text = "RISK TAKING";
+                _statbar_t3_3.GetComponentInChildren<Text>().text = "FLAIR";
+                _statbar_t3_4.GetComponentInChildren<Text>().text = "WARDING";
+                break;
+            case 4:
+                _statbar_t1_1.GetComponentInChildren<Text>().text = "ROAMING";
+                _statbar_t1_2.GetComponentInChildren<Text>().text = "WARDING";
+                _statbar_t1_3.GetComponentInChildren<Text>().text = "POSITIONING";
+                _statbar_t1_4.GetComponentInChildren<Text>().text = "LANE CONTROL";
+
+                _statbar_t2_1.GetComponentInChildren<Text>().text = "TEAMWORk";
+                _statbar_t2_2.GetComponentInChildren<Text>().text = "FIGHTING";
+                _statbar_t2_3.GetComponentInChildren<Text>().text = "FARMING";
+                _statbar_t2_4.GetComponentInChildren<Text>().text = "CONSISTENCY";
+                _statbar_t2_5.GetComponentInChildren<Text>().text = "DECISION MAKING";
+
+                _statbar_t3_1.GetComponentInChildren<Text>().text = "RISK TAKING";
+                _statbar_t3_2.GetComponentInChildren<Text>().text = "FLAIR";
+                _statbar_t3_3.GetComponentInChildren<Text>().text = "PUSHING";
+                _statbar_t3_4.GetComponentInChildren<Text>().text = "MAP AWARENESS";
+                break;
+            case 5:
+                _statbar_t1_1.GetComponentInChildren<Text>().text = "ROAMING";
+                _statbar_t1_2.GetComponentInChildren<Text>().text = "WARDING";
+                _statbar_t1_3.GetComponentInChildren<Text>().text = "POSITIONING";
+                _statbar_t1_4.GetComponentInChildren<Text>().text = "LANE CONTROL";
+
+                _statbar_t2_1.GetComponentInChildren<Text>().text = "TEAMWORk";
+                _statbar_t2_2.GetComponentInChildren<Text>().text = "FIGHTING";
+                _statbar_t2_3.GetComponentInChildren<Text>().text = "FARMING";
+                _statbar_t2_4.GetComponentInChildren<Text>().text = "CONSISTENCY";
+                _statbar_t2_5.GetComponentInChildren<Text>().text = "DECISION MAKING";
+
+                _statbar_t3_1.GetComponentInChildren<Text>().text = "RISK TAKING";
+                _statbar_t3_2.GetComponentInChildren<Text>().text = "FLAIR";
+                _statbar_t3_3.GetComponentInChildren<Text>().text = "PUSHING";
+                _statbar_t3_4.GetComponentInChildren<Text>().text = "MAP AWARENESS";
+                break;
+        }
     }
 
 }
