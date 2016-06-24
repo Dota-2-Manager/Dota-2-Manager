@@ -23,6 +23,13 @@ public class GetTeamMemberInfo : MonoBehaviour
     public GameObject _statbar_t3_3;
     public GameObject _statbar_t3_4;
 
+    public GameObject _posbar_1;
+    public GameObject _posbar_2;
+    public GameObject _posbar_3;
+    public GameObject _posbar_4;
+
+    public Text nameText;
+
     double stat_t1_1;
     double stat_t1_2;
     double stat_t1_3;
@@ -51,6 +58,9 @@ public class GetTeamMemberInfo : MonoBehaviour
     Vector2 _defaultBarSize;
     Vector2 _defaultBarPos;
 
+    Vector2 _defaultPosBarSize;
+    Vector2 _defaultPosBarPos;
+
     List<DotaPlayer> playerList;
 
     public Button _btn_role_1;
@@ -66,6 +76,9 @@ public class GetTeamMemberInfo : MonoBehaviour
         // used for referencing original x position
         _defaultBarSize = _statbar_t1_1.transform.GetComponent<RectTransform>().sizeDelta;
         _defaultBarPos = _statbar_t1_1.transform.GetComponent<RectTransform>().anchoredPosition;
+
+        _defaultPosBarSize = _posbar_1.transform.GetComponent<RectTransform>().sizeDelta;
+        _defaultPosBarPos = _posbar_1.transform.GetComponent<RectTransform>().anchoredPosition;
 
         GameData._team = GameData._teamsInGame[0];
         // Debug.Log(GameData._team.GetTeamName());
@@ -132,10 +145,14 @@ public class GetTeamMemberInfo : MonoBehaviour
 
     }
 
+    // function invoked when each player is selected
     public void RefreshWithNewData(string memberName)
     {
         Debug.Log("attempting to get data for player: " + memberName);
+
+        // this will also set SelectedPlayer
         GetPlayerStatData(memberName);
+
         FindPlayerRole(memberName);
         //Debug.Log(_statbar_t1_1.transform.GetComponent<RectTransform>());
 
@@ -157,6 +174,23 @@ public class GetTeamMemberInfo : MonoBehaviour
 
         DisableCurrentRoleBtn((int)playerList.Find(i => i.name == memberName).GetPos());
 
+        ChangeThisPosBar(_posbar_1, selectedPlayer.Carry);
+        ChangeThisPosBar(_posbar_2, selectedPlayer.Mid);
+        ChangeThisPosBar(_posbar_3, selectedPlayer.Offlane);
+        ChangeThisPosBar(_posbar_4, selectedPlayer.Support);
+
+        nameText.GetComponent<Text>().text = selectedPlayer.name;
+
+    }
+
+    public void ChangeThisPosBar(GameObject csb, double stat)
+    {
+        Single statratio = (Convert.ToSingle(stat)/5f);
+        csb.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(_defaultPosBarSize.x , statratio * _defaultPosBarSize.y);
+        Vector2 offset = new Vector2(0, (_defaultPosBarSize.y - statratio * _defaultPosBarSize.y)/2);
+
+        csb.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(csb.transform.GetComponent<RectTransform>().anchoredPosition.x, _defaultPosBarPos.y - offset.y);
+
     }
 
     public void ChangeThisBar(GameObject csb, double stat)
@@ -176,6 +210,8 @@ public class GetTeamMemberInfo : MonoBehaviour
     public void FindPlayerRole(string p)
     {
         string role = playerList.Find(i => i.name == p).GetPos().ToString();
+
+
         Debug.Log(role);
     }
 
