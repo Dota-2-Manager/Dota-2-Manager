@@ -21,8 +21,11 @@ public class GameStartLoadUI : MonoBehaviour
             //positioning
             b.transform.SetParent(_mainCanvas.transform, false);
             //TODO: screen size formula for offset
+            // not sure which is better in terms of screen size scaling, this:
             Single h = Convert.ToSingle(Screen.height);
             b.transform.Translate(0,-h/16*i,0);
+            // or this:
+            b.transform.Translate(0,-50*i,0);
 
             // set text
             b.transform.GetChild(0).GetComponent<Text>().text = GameData._teamsInGame[i].GetTeamName();

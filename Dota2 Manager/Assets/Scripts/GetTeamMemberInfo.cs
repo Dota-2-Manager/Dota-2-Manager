@@ -153,7 +153,7 @@ public class GetTeamMemberInfo : MonoBehaviour
         // this will also set SelectedPlayer
         GetPlayerStatData(memberName);
 
-        FindPlayerRole(memberName);
+        //FindPlayerRole(memberName); // redundant?
         //Debug.Log(_statbar_t1_1.transform.GetComponent<RectTransform>());
 
         ChangeThisBar(_statbar_t1_1, stat_t1_1);
@@ -200,6 +200,14 @@ public class GetTeamMemberInfo : MonoBehaviour
         Vector2 offset = new Vector2((_defaultBarSize.x - (statratio * _defaultBarSize.x))/2, 0);
 
         csb.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(_defaultBarPos.x - offset.x, csb.transform.GetComponent<RectTransform>().anchoredPosition.y);
+        foreach (Transform child in csb.transform)
+        {
+            foreach (Transform child2 in child)
+            {
+            child2.GetComponent<Text>().text = stat.ToString();
+            }
+
+        }
     }
 
     public void SetButtonTextToPlayerName(Button b, int i)
