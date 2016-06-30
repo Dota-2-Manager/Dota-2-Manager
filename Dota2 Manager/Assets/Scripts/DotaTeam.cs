@@ -12,6 +12,13 @@ public class DotaTeam {
 
     private double TeamTotalValue;
 
+    // new add team, for populating allPlayers and teamsInGame
+    public DotaTeam(string tn, int arg)
+    {
+        teamName = tn;
+
+    }
+
     public DotaTeam(string PTeamName)
     {
         
@@ -23,7 +30,7 @@ public class DotaTeam {
         {
             if (teamName == existingTeam.GetTeamName())
             {
-                //Debug.Log("Found a match");
+                Debug.Log("Found a match for team name \"" + teamName + "\"");
                 foundExistingTeam = true;
                 foreach (DotaPlayer player in GameCore.allPlayers)
                 {
@@ -49,7 +56,7 @@ public class DotaTeam {
         CalculateTeamTotalValue();
     }
 
-    public List<DotaPlayer> getList()
+    public List<DotaPlayer> GetList()
     {
         return players;
     }
@@ -70,6 +77,16 @@ public class DotaTeam {
         {
             TeamTotalValue += player.total;
         }
+    }
+
+    public void AddPlayer(DotaPlayer p)
+    {
+        players.Add(p);
+    }
+
+    public void RemovePlayer(DotaPlayer p)
+    {
+        players.Remove(p);
     }
 
 }
